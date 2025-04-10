@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="style.css">
+  <title>Reporte de Transporte</title>
+</head>
+<body>
+  <section class="form-register">
+    <h4>Reporte de Transporte</h4>
+    
+    <input class="controls" type="text" name="nombreReportante" id="nombreReportante" placeholder="Nombre del reportante">
+    
+    <input class="controls" type="tel" name="telefono" id="telefono" placeholder="Número de teléfono">
+    
+    <input class="controls" type="text" name="placa" id="placa" placeholder="Placa del camión">
+    
+    <textarea class="controls" name="descripcionFalla" id="descripcionFalla" placeholder="Escribe aquí el problema:" rows="4"></textarea>
+    
+    <input class="botons" type="submit" value="Mandar reporte">
+  </section>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelector('.botons').addEventListener('click', async (e) => {
+        e.preventDefault();
+  
+        const data = {
+          nombreReportante: document.getElementById('nombreReportante').value,
+          telefono: document.getElementById('telefono').value,
+          placaCamion: document.getElementById('placa').value,
+          descripcionFalla: document.getElementById('descripcionFalla').value
+        };
+  
+        try {
+          const response = await fetch('http://localhost:8080/api/reportes', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+          });
+  
+          if (response.ok) {
+            alert('Reporte enviado con éxito 🚀');
+          } else {
+            alert('Hubo un error al mandar el reporte 😢');
+          }
+        } catch (error) {
+          alert('Error al conectar con el servidor 😵');
+          console.error(error);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
